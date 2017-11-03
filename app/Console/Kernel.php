@@ -14,6 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\CollectNews::class,
+        \App\Console\Commands\MakeWords::class,
+        
     ];
 
     /**
