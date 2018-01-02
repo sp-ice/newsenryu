@@ -18,6 +18,8 @@ class Kernel extends ConsoleKernel
         
     ];
 
+    private $path_log = '/var/www/log/command.log';
+
     /**
      * Define the application's command schedule.
      *
@@ -28,8 +30,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('getnews')->hourly();
-
+        //$schedule->command('getnews')->everyMinute()->appendOutputTo($path_log);
+	$schedule->command('getnews')->hourly()->appendOutputTo($path_log);
     }
 
     /**
