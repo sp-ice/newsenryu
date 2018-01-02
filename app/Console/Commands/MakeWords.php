@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\News;
+use App\Word;
 // use Illuminate\Validation\Validator;
 use Illuminate\Validation\Factory;
 
@@ -41,16 +42,28 @@ class MakeWords extends Command
     public function handle()
     {
         $clc_news = $this->getNews();
-        print_r($clc_news);
-        exit;
-
         foreach ($clc_news as $news) {
-            print_r($news);
-            exit;
-            
-            
             try{
+                $q = urlencode($news->title);
+                $url = "http://127.0.0.1/kuromoji?s=$q";
+		$ret_str = file_get_contents($url);
+                $ret_obj = json_decode($ret_str);
+                foreach($ret_obj as $keitaiso){
+print_r($keitaiso);
+                    if(property_exists($keitaiso, 'reading')){
+                        $len_reading = iconv_strlen($keitaiso->reading);
+print_r($len_reading);
+                        if($len_reading == 5 || $len_reading == 7){
+                            $word = $this->createWord($news->id, $keitaiso->reading);
+                            echo 'OK:',$word->id,"\n";
+                        }
+                    }
+                }
+exit;
+
                 $rss = simplexml_load_file($url);
+                print_r($rss);
+exit;
                 foreach ($rss->channel->item as $item) {
                     $data = json_decode(json_encode($item),TRUE);
 
@@ -79,6 +92,22 @@ class MakeWords extends Command
     }
 
     /**
+     * Wordテーブル登録処理
+     *
+     * @param  int  $news_id
+     * @param  string  $str_word
+     * @return \App\Word
+     */
+    protected function createWord(int $news_id, string $str_word)
+    {
+        return Word::create([
+            'news_id' => $news_id,
+            'word' => $str_word,
+            'len' => iconv_strlen($str_word),
+        ]);
+    }
+
+    /**
      * Newsテーブル登録処理
      *
      * @param  array  $data
@@ -103,6 +132,6 @@ class MakeWords extends Command
      */
     protected function getNews()
     {
-        return News::where('flg_analyze', 0);
+        return News::where('flg_analyze', 0)->get();
     }
 }

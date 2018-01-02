@@ -30,8 +30,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        //$schedule->command('getnews')->everyMinute()->appendOutputTo($path_log);
-	$schedule->command('getnews')->hourly()->appendOutputTo($path_log);
+        //$schedule->command('getnews')->everyMinute()->appendOutputTo($this->th_log);
+	$schedule->command('getnews')->hourly()->appendOutputTo($this->path_log);
     }
 
     /**
