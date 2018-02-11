@@ -18,6 +18,8 @@ class CreateWordsTable extends Migration
             $table->UnsignedInteger('news_id');
             $table->UnsignedInteger('len');
             $table->string('word');
+            $table->string('reading');
+            $table->json('analyze_data');
             $table->foreign('news_id')->references('id')->on('news');
             $table->timestamps();
         });
