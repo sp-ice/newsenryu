@@ -18,7 +18,8 @@ class Kernel extends ConsoleKernel
         
     ];
 
-    private $path_log = '/var/www/log/command.log';
+    private $path_log_getnews = '/var/www/log/command_getnews.log';
+    private $path_log_makewords = '/var/www/log/command_makewords.log';
 
     /**
      * Define the application's command schedule.
@@ -31,7 +32,8 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         //$schedule->command('getnews')->everyMinute()->appendOutputTo($this->th_log);
-	$schedule->command('getnews')->hourly()->appendOutputTo($this->path_log);
+	$schedule->command('getnews')->hourly()->appendOutputTo($this->path_log_getnews);
+	$schedule->command('makewords')->daily()->appendOutputTo($this->path_log_makewords);
     }
 
     /**
