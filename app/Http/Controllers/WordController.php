@@ -14,7 +14,8 @@ class WordController extends Controller
      */
     public function index()
     {
-        //
+	//return response(Word::find(9426));
+	return response(Word::orderby('created_at', 'desc')->paginate());
     }
 
     /**
@@ -24,7 +25,7 @@ class WordController extends Controller
      */
     public function create()
     {
-        //
+        //no use
     }
 
     /**
@@ -35,7 +36,7 @@ class WordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //no use
     }
 
     /**
@@ -46,7 +47,7 @@ class WordController extends Controller
      */
     public function show(Word $word)
     {
-        //
+        return response($word);
     }
 
     /**
@@ -57,7 +58,7 @@ class WordController extends Controller
      */
     public function edit(Word $word)
     {
-        //
+        //no use
     }
 
     /**
@@ -69,7 +70,7 @@ class WordController extends Controller
      */
     public function update(Request $request, Word $word)
     {
-        //
+        //no use
     }
 
     /**
@@ -80,6 +81,6 @@ class WordController extends Controller
      */
     public function destroy(Word $word)
     {
-        //
+        //no use
     }
 }
