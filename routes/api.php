@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('/word', 'WordController', ['except' => ['create', 'edit', 'store', 'update', 'destroy']]);
+Route::resource('/senryu', 'SenryuController', ['except' => ['create', 'edit']]);
+
