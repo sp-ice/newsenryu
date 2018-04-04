@@ -47,7 +47,64 @@ docker-compose down
 
  ## 自作コマンド
  php artisan make:command CollectNews --command="getnews"
+ php artisan make:command MakeWords --command="makewords"
  php artisan getnews
+ php artisan makewords
 
  ## cron設定
  * * * * * php artisan schedule:run >> /dev/null 2>&1
+
+
+
+
+
+
+
+cd /var/www/node
+PORT=80 npm start
+
+
+
+
+
+
+
+
+ ## mecabインストール
+ docker-compose exec php−fpm bash
+
+ ### mecab本体
+ cd /var/www/src/mecab/mecab
+ ./configure  --enable-utf8-only
+make
+make check
+make install
+
+### mecab辞書
+echo '/usr/local/lib' >> /etc/ld.so.conf.d/local.conf
+ldconfig
+　　※makeが落ちるので対策（デフォルトで/usr/local/libが参照されないため）
+　　参考：http://moznion.hatenadiary.com/entry/2013/08/23/105920
+
+cd /var/www/src/mecab/mecab-ipadic
+ ./configure  --enable-utf8-only
+make
+make install
+
+### php-mecab
+cd /var/www/src/php-mecab/mecab
+phpize
+./configure
+make
+make test
+make install
+
+cp /var/www/src/mecab.ini /usr/local/etc/php-fpm.d/mecab.conf
+
+ここでコンテナ再起動で、動かなくなった。。。
+docker-compose restart
+
+
+
+
+577
