@@ -87,21 +87,21 @@ class SenryuController extends Controller
      */
     public function update(Request $request, Senryu $senryu)
     {
-	if($request->input('word_kami_id')){
-		$senryu->word_kami_id = $request->input('word_kami_id');
-	}
-	if($request->input('word_naka_id')){
-        	$senryu->word_naka_id = $request->input('word_naka_id');
-	}
-	if($request->input('word_simo_id')){
-       		$senryu->word_simo_id = $request->input('word_simo_id');
-	}
-	if($request->input('good')){
-        	$senryu->good = $request->input('good'));
-	}
-	if($request->input('view')){
-        	$senryu->view = $request->input('view'));
-	}
+    	if($request->input('word_kami_id')){
+    		$senryu->word_kami_id = $request->input('word_kami_id');
+    	}
+    	if($request->input('word_naka_id')){
+            	$senryu->word_naka_id = $request->input('word_naka_id');
+    	}
+    	if($request->input('word_simo_id')){
+           		$senryu->word_simo_id = $request->input('word_simo_id');
+    	}
+    	if($request->input('good')){
+            	$senryu->good = $request->input('good');
+    	}
+    	if($request->input('view')){
+            	$senryu->view = $request->input('view');
+    	}
         $senryu->save();
         return response($senryu);
  
@@ -115,7 +115,7 @@ class SenryuController extends Controller
      */
     public function destroy(Senryu $senryu)
     {
-    	$senryu->destroy();
+    	$senryu->delete();
 	return response('{}');
     }
 }
