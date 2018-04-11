@@ -12,3 +12,4 @@ yarn-error.log
 .env
 /node/node_modules
 /src
+*.log
