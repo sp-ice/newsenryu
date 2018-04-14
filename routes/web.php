@@ -18,3 +18,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//twitter login
+Route::get('auth/twitter', 'OAuthLoginController@getAuth');
+Route::get('auth/callback/twitter', 'OAuthLoginController@authCallback');
+
+//Facebook
+//Route::get('auth/facebook', 'OAuthLoginController@getAuth');
+//Route::get('auth/callback/facebook', 'OAuthLoginController@authCallback');
+
+//Google
+//Route::get('auth/google', 'OAuthLoginController@getAuth');
+//Route::get('auth/callback/google', 'OAuthLoginController@authCallback');
