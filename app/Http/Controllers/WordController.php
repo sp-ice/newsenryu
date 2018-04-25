@@ -12,10 +12,24 @@ class WordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 	//return response(Word::find(9426));
-	return response(Word::orderby('created_at', 'desc')->paginate());
+    	$words = Word::select(
+            'words.id',
+            'news.id AS news_id',
+            'news.title AS news_title',
+            'news.url AS news_url',
+            'words.word',
+            'words.reading',
+            'words.len',
+            'words.created_at'
+        )
+        ->join('news','news.id','=','words.news_id')
+        ->where('words.len', '=', $request->input('len', 5))
+        ->orderby('words.created_at', 'desc');
+        
+        return response($words->paginate());
     }
 
     /**

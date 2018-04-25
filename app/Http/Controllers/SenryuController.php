@@ -12,9 +12,34 @@ class SenryuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response(Senryu::orderby('created_at', 'desc')->paginate());
+        $senryus = Senryu::select(
+                'senryu.id',
+                'senryu.created_at',
+                'senryu.good',
+                'senryu.view',
+                'users.id as user_id',
+                'users.name as user_name',
+                'words_kami.word as kami_ku',
+                'words_naka.word as naka_ku',
+                'words_simo.word as simo_ku',
+                'news_kami.url as kami_url',
+                'news_naka.url as naka_url',
+                'news_simo.url as simo_url'
+            )
+            ->join('users','users.id','=','senryu.user_id')
+            ->join('words as words_kami','words_kami.id','=','senryu.word_kami_id')
+            ->join('words as words_naka','words_naka.id','=','senryu.word_naka_id')
+            ->join('words as words_simo','words_simo.id','=','senryu.word_simo_id')
+            ->join('news as news_kami','news_kami.id','=','words_kami.news_id')
+            ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
+            ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
+            ->orderby('senryu.created_at', 'desc');
+        if( $request->input('since_id') ){
+            $senryus = $senryus->where('senryu.id', '<=', $request->input('since_id'));
+        }
+        return response($senryus->paginate());
     }
 
     /**
