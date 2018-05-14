@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\News;
+use App\Site;
 // use Illuminate\Validation\Validator;
 use Illuminate\Validation\Factory;
 
@@ -24,6 +25,11 @@ class CollectNews extends Command
     protected $description = 'Command description';
 
     /**
+     * ログキー
+     */
+    protected $log_key = '';
+
+    /**
      * Create a new command instance.
      *
      * @return void
@@ -40,16 +46,20 @@ class CollectNews extends Command
      */
     public function handle()
     {
-        $ar_url = array(
-            'yahoo' => 'https://news.yahoo.co.jp/pickup/rss.xml',
-            'yahoo2' => 'https://news.yahoo.co.jp/pickup/domestic/rss.xml',
-        );
-
-        foreach ($ar_url as $src => $url) {
+        $sites = Site::all();
+        foreach ($sites as $site) {
             try{
-                $rss = simplexml_load_file($url);
-                foreach ($rss->channel->item as $item) {
+                $this->log_key = $site->name;
+                $this->echoLog("RSS取得開始($site->url)");
+                $rss = simplexml_load_file($site->url);
+                $this->echoLog("RSS取得完了");
+                $this->echoLog("newsテーブル登録開始");
+                $cnt_created = 0;
+                foreach ($rss->item as $item) {
                     $data = json_decode(json_encode($item),TRUE);
+                    if(!array_key_exists('pubDate', $data)){
+                        $data['pubDate'] = date("Y-m-d H:i:s");
+                    }
 
                     $validator = app("validator");
                     $v = $validator->make($data, [
@@ -60,16 +70,17 @@ class CollectNews extends Command
                     if ($v->fails()) {
                         $errors = $v->errors();
                         foreach ($errors->all() as $message) {
-                            echo $message, "\n";
+                            $this->echoLog("登録失敗($message)");
                         }
                         continue;
                     }
 
-                    $news = $this->createNews($data,$src);
-                    echo 'OK:',$news->id,"\n";
+                    $news = $this->createNews($data,$site->id);
+                    $cnt_created++;
                 }
+                $this->echoLog("newsテーブル登録完了($cnt_created件)");
             } catch (Exception $e) {
-                echo 'ERR:',  $e->getMessage(), "\n";
+                $this->echoLog("予期せぬエラー($e->getMessage())");
                 continue;
             }
         }
@@ -79,17 +90,24 @@ class CollectNews extends Command
      * Newsテーブル登録処理
      *
      * @param  array  $data
-     * @param  string  $src
+     * @param  integer  $site_id
      * @return \App\News
      */
-    protected function createNews(array $data, string $src)
+    protected function createNews(array $data, string $site_id)
     {
         return News::create([
             'url' => $data['link'],
             'title' => $data['title'],
             'pub_date' => $data['pubDate'],
-            'src' => $src,
+            'site_id' => $site_id,
             'flg_analyze' => 0,
         ]);
+    }
+
+    /**
+     * ログ出力
+     */
+    protected function echoLog(string $msg){
+        echo date("Y-m-d H:i:s.v")." [$this->log_key] $msg\n";
     }
 }
