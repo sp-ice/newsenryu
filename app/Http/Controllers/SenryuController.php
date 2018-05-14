@@ -24,6 +24,9 @@ class SenryuController extends Controller
                 'words_kami.word as kami_ku',
                 'words_naka.word as naka_ku',
                 'words_simo.word as simo_ku',
+                'words_kami.id as kami_id',
+                'words_naka.id as naka_id',
+                'words_simo.id as simo_id',
                 'news_kami.url as kami_url',
                 'news_naka.url as naka_url',
                 'news_simo.url as simo_url'
@@ -38,6 +41,10 @@ class SenryuController extends Controller
             ->orderby('senryu.created_at', 'desc');
         if( $request->input('since_id') ){
             $senryus = $senryus->where('senryu.id', '<=', $request->input('since_id'));
+        }
+        if( $request->input('mode') == 'mine' ){
+            // todo: ログインユーザのidが入るようにする
+            $senryus = $senryus->where('users.id', '=', \App\User::query()->first()->id);
         }
         return response($senryus->paginate());
     }

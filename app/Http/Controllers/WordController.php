@@ -29,7 +29,7 @@ class WordController extends Controller
         ->where('words.len', '=', $request->input('len', 5))
         ->orderby('words.created_at', 'desc');
         
-        return response($words->paginate());
+        return response($words->paginate(50));
     }
 
     /**
