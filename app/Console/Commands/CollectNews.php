@@ -50,12 +50,23 @@ class CollectNews extends Command
         foreach ($sites as $site) {
             try{
                 $this->log_key = $site->name;
-                $this->echoLog("RSS取得開始($site->url)");
+                $this->echoLog(sprintf('RSS取得開始(%s)', $site->url));
                 $rss = simplexml_load_file($site->url);
-                $this->echoLog("RSS取得完了");
-                $this->echoLog("newsテーブル登録開始");
+                $this->echoLog('RSS取得完了');
+                $this->echoLog('newsテーブル登録開始');
                 $cnt_created = 0;
-                foreach ($rss->item as $item) {
+                switch ($site->strategy_code) {
+                    case 0:
+                        //yahooニュース
+                        $items = $rss->channel->item;
+                        break;
+                    case 1:
+                        //毎日新聞
+                    default:
+                        $items = $rss->item;
+                        break;
+                }
+                foreach ($items as $item) {
                     $data = json_decode(json_encode($item),TRUE);
                     if(!array_key_exists('pubDate', $data)){
                         $data['pubDate'] = date("Y-m-d H:i:s");
@@ -70,7 +81,7 @@ class CollectNews extends Command
                     if ($v->fails()) {
                         $errors = $v->errors();
                         foreach ($errors->all() as $message) {
-                            $this->echoLog("登録失敗($message)");
+                            $this->echoLog(sprintf('登録失敗(%s)', $message));
                         }
                         continue;
                     }
@@ -78,9 +89,9 @@ class CollectNews extends Command
                     $news = $this->createNews($data,$site->id);
                     $cnt_created++;
                 }
-                $this->echoLog("newsテーブル登録完了($cnt_created件)");
+                $this->echoLog(sprintf('newsテーブル登録完了(%s件)', $cnt_created));
             } catch (Exception $e) {
-                $this->echoLog("予期せぬエラー($e->getMessage())");
+                $this->echoLog(sprintf('予期せぬエラー(%s)', $e->getMessage()), true);
                 continue;
             }
         }
@@ -107,7 +118,8 @@ class CollectNews extends Command
     /**
      * ログ出力
      */
-    protected function echoLog(string $msg){
-        echo date("Y-m-d H:i:s.v")." [$this->log_key] $msg\n";
+    protected function echoLog(string $msg, $flg_err = false){
+        $log_kbn = $flg_err ? "ERR" : "INF";
+        echo sprintf("%s[%3s][%10s]%s\n",date("Y-m-d H:i:s.v"), $log_kbn, $this->log_key, $msg);
     }
 }

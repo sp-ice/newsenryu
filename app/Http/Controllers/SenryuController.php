@@ -17,7 +17,8 @@ class SenryuController extends Controller
         $senryus = Senryu::select(
                 'senryu.id',
                 'senryu.created_at',
-                'senryu.good',
+                //'senryu.good',
+                '(SELECT COUNT(*) FROM likes WHERE likes.user_id='.\App\User::query()->first()->id.' AND likes.senryu_id=senryu.id) AS good',
                 'senryu.view',
                 'users.id as user_id',
                 'users.name as user_name',
@@ -29,7 +30,8 @@ class SenryuController extends Controller
                 'words_simo.id as simo_id',
                 'news_kami.url as kami_url',
                 'news_naka.url as naka_url',
-                'news_simo.url as simo_url'
+                'news_simo.url as simo_url',
+                'likes.id as like_id'
             )
             ->join('users','users.id','=','senryu.user_id')
             ->join('words as words_kami','words_kami.id','=','senryu.word_kami_id')
@@ -38,6 +40,10 @@ class SenryuController extends Controller
             ->join('news as news_kami','news_kami.id','=','words_kami.news_id')
             ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
             ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
+            // ->leftjoin('likes', function ($join) {
+            //     $join->on('likes.user_id', '=', 'users.id')
+            //          ->on('likes.senryu_id', '=', 'senryu.id');
+            // })
             ->orderby('senryu.created_at', 'desc');
         if( $request->input('since_id') ){
             $senryus = $senryus->where('senryu.id', '<=', $request->input('since_id'));
