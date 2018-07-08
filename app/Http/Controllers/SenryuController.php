@@ -25,12 +25,10 @@ class SenryuController extends Controller
 
         //ログインユーザーいいね済み川柳
         $is_liked_sql = DB::raw(
-            '(SELECT 1'.
+            '(SELECT senryu_id, 1 as is_liked'.
             ' FROM likes'.
             ' WHERE user_id='.\App\User::query()->first()->id.//todo
-            ' AND senryu_id=senryu.id'.
-            ' LIMIT 1'.
-            ') as is_liked'
+            ') as liked'
         );
 
         $senryus = Senryu::select(
@@ -50,7 +48,7 @@ class SenryuController extends Controller
                 'news_naka.url as naka_url',
                 'news_simo.url as simo_url',
                 'good.like_count',
-                $is_liked_sql
+                'liked.is_liked'
             )
             ->join('users','users.id','=','senryu.user_id')
             ->join('words as words_kami','words_kami.id','=','senryu.word_kami_id')
@@ -60,14 +58,20 @@ class SenryuController extends Controller
             ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
             ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
             ->leftJoin($likes_sql,'good.senryu_id','=','senryu.id')
+            ->leftJoin($is_liked_sql,'liked.senryu_id','=','senryu.id')
             ->orderby('senryu.created_at', 'desc');
 
         if( $request->input('since_id') ){
             $senryus = $senryus->where('senryu.id', '<=', $request->input('since_id'));
         }
-        if( $request->input('mode') == 'mine' ){
-            // todo: ログインユーザのidが入るようにする
-            $senryus = $senryus->where('users.id', '=', \App\User::query()->first()->id);
+        switch( $request->input('mode') ){
+            case 'mine':
+                // todo: ログインユーザのidが入るようにする
+                $senryus = $senryus->where('users.id', '=', \App\User::query()->first()->id);
+                break;
+            case 'liked':
+                $senryus = $senryus->where('liked.is_liked', '=', 1);
+                break;
         }
         return response($senryus->paginate());
     }

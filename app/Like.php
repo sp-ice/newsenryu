@@ -13,12 +13,10 @@ class Like extends Model
      */
      protected $table = 'likes';
 
-     /**
-     * createメソッド実行時に、入力を禁止するカラムの指定
-     *
-     * @var array
-     */
-     protected $guarded = array('id');
+     // プライマリキー設定
+    protected $primaryKey = ['senryu_id', 'user_id'];
+    // increment無効化
+    public $incrementing = false;
 
      /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
