@@ -1,0 +1,3 @@
+[submodule "spa"]
+	path = spa
+	url = git@bitbucket.org:sp_ice/newsenryuapp.git
