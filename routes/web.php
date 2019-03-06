@@ -20,8 +20,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //twitter login
-Route::get('auth/twitter', 'OAuthLoginController@getAuth');
-Route::get('auth/callback/twitter', 'OAuthLoginController@authCallback');
+Route::get('auth/{provider}', 'OAuthLoginController@getAuth');
+Route::get('auth/callback/{provider}', 'OAuthLoginController@authCallback');
 
 //Facebook
 //Route::get('auth/facebook', 'OAuthLoginController@getAuth');

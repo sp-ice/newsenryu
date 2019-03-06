@@ -176,11 +176,13 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\FirebaseServiceProvider::class,
         
         /*
-	 * Sociailite
-	 */
-	Laravel\Socialite\SocialiteServiceProvider::class,
+        * Sociailite
+        */
+        Laravel\Socialite\SocialiteServiceProvider::class,
+    
     ],
 
     /*
