@@ -606,8 +606,7 @@ var AppSettings = /** @class */ (function () {
     function AppSettings() {
     }
     //URL
-    AppSettings.API_ENDPOINT = 'http://localhost:8100/api/';
-    //public static API_ENDPOINT='http://133.130.91.251/api/';
+    AppSettings.API_ENDPOINT = window.location.href + 'api/';
     //川柳取得モード
     AppSettings.MODE_GET_SENRYU_NORMAL = 0;
     AppSettings.MODE_GET_SENRYU_MINE = 1; //自分が投稿した川柳
