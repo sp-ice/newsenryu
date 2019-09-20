@@ -25678,6 +25678,28 @@ ion-navbar.toolbar {
   min-height: calc(46px + env(safe-area-inset-bottom));
 }
 
+.active-item {
+  border-left: 8px solid var(--ion-color-primary);
+}
+
+senryu-list .card-content-md {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+senryu-list a.midashi {
+  display: inline-block;
+  color: #010079;
+  padding: 0.1em 0.15em;
+  margin: 0.25em;
+  background: -webkit-repeating-linear-gradient(-45deg, #555, #555 3px, #333 3px, #333 7px);
+  background: repeating-linear-gradient(-45deg, #555, #555 3px, #333 3px, #333 7px);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
 page-list .yomuBtn {
   position: fixed;
   right: 2rem;
