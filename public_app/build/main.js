@@ -1,207 +1,13 @@
 webpackJsonp([4],{
 
-/***/ 118:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SenryuServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_settings__ = __webpack_require__(32);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-/*
-  Generated class for the SenryuServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
-var SenryuServiceProvider = /** @class */ (function () {
-    function SenryuServiceProvider(http) {
-        this.http = http;
-        console.log('Hello SenryuServiceProvider Provider');
-    }
-    SenryuServiceProvider.prototype.getSenryus = function (_mode, _url, _since_id) {
-        if (_mode === void 0) { _mode = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_NORMAL; }
-        if (_url === void 0) { _url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'senryu'; }
-        if (_since_id === void 0) { _since_id = null; }
-        switch (_mode) {
-            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_MINE:
-                _url = this.addParam2URL(_url, 'mode', 'mine');
-                break;
-            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_LIKED:
-                _url = this.addParam2URL(_url, 'mode', 'liked');
-                break;
-            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_NORMAL:
-                break;
-            default:
-                break;
-        }
-        if (_since_id != null) {
-            _url = this.addParam2URL(_url, 'since_id', _since_id);
-        }
-        console.log("getSenryu:" + _url);
-        return this.http.get(_url);
-    };
-    SenryuServiceProvider.prototype.postSenryu = function (_senryu) {
-        var url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'senryu';
-        var senddata = {
-            word_kami_id: _senryu.kami_id,
-            word_naka_id: _senryu.naka_id,
-            word_simo_id: _senryu.simo_id,
-        };
-        return this.http.post(url, senddata);
-    };
-    SenryuServiceProvider.prototype.likeSenryu = function (_senryu, _flg_delete) {
-        if (_flg_delete === void 0) { _flg_delete = false; }
-        var url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'like';
-        var senddata = {
-            senryu_id: _senryu.id,
-            flg_delete: _flg_delete
-        };
-        return this.http.post(url, senddata);
-    };
-    SenryuServiceProvider.prototype.addParam2URL = function (_url, _key, _value) {
-        var resurl = _url;
-        resurl += (resurl.indexOf('?') == -1) ? '?' : '&';
-        resurl += _key + '=' + String(_value);
-        return resurl;
-    };
-    SenryuServiceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
-    ], SenryuServiceProvider);
-    return SenryuServiceProvider;
-}());
-
-//# sourceMappingURL=senryu-service.js.map
-
-/***/ }),
-
-/***/ 154:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PagesServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_mine_mine__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_liked_liked__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_settings__ = __webpack_require__(32);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-// import { LoginPage } from '../../pages/login/login';
-
-var PagesServiceProvider = /** @class */ (function () {
-    function PagesServiceProvider(events, http) {
-        this.events = events;
-        this.http = http;
-        this.pages = [];
-        this.eanableDefaultMenu();
-    }
-    PagesServiceProvider.prototype.getPages = function () {
-        return this.pages;
-    };
-    PagesServiceProvider.prototype.eanableDefaultMenu = function () {
-        this.pages = [
-            { title: '最新の川柳', component: 'list', isSelected: true },
-            { title: ' 一句詠む', component: 'yomu', isSelected: false },
-            { title: 'ログイン', component: 'login', isSelected: false },
-        ];
-        this.events.publish('updateMenu', this.pages);
-    };
-    PagesServiceProvider.prototype.enableLoginedMenu = function () {
-        this.pages = [
-            { title: '最新の川柳', component: 'list', isSelected: true },
-            { title: ' 一句詠む', component: 'yomu', isSelected: false },
-            { title: '自分が詠んだ川柳', component: __WEBPACK_IMPORTED_MODULE_3__pages_mine_mine__["a" /* MinePage */], isSelected: false },
-            { title: 'イイネした川柳', component: __WEBPACK_IMPORTED_MODULE_4__pages_liked_liked__["a" /* LikedPage */], isSelected: false }
-        ];
-        this.events.publish('updateMenu', this.pages);
-    };
-    PagesServiceProvider.prototype.changePage = function (component) {
-        this.pages.map(function (p) {
-            p['isSelected'] = (component === p.component);
-        });
-    };
-    PagesServiceProvider.prototype.checkLoginAndUpdateMenu = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            if (__WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].isLogin())
-                resolve(true);
-            var _url = __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].API_ENDPOINT_LOGINED + 'check';
-            console.log("cehckLogin:" + _url);
-            _this.http.get(_url, { observe: 'response' }).subscribe(function (res) {
-                console.log("res.status:" + res.status);
-                if (res.status == 200) {
-                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(true);
-                    _this.enableLoginedMenu();
-                }
-                else {
-                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(false);
-                }
-                resolve(true);
-            }, function (err) {
-                console.log(err);
-                if (__WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].FLG_DEBUG) {
-                    //無理やりログイン状態で表示
-                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(true);
-                    _this.enableLoginedMenu();
-                }
-                else {
-                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(false);
-                    _this.eanableDefaultMenu();
-                }
-                resolve(true);
-            }, function () { });
-        });
-    };
-    PagesServiceProvider = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]) === "function" && _b || Object])
-    ], PagesServiceProvider);
-    return PagesServiceProvider;
-    var _a, _b;
-}());
-
-//# sourceMappingURL=pages-service.js.map
-
-/***/ }),
-
-/***/ 155:
+/***/ 104:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LikedPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -242,15 +48,15 @@ var LikedPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 156:
+/***/ 105:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MinePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__yomu_yomu__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_settings__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__yomu_yomu__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_settings__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -296,7 +102,7 @@ var MinePage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 167:
+/***/ 117:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -309,28 +115,28 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 167;
+webpackEmptyAsyncContext.id = 117;
 
 /***/ }),
 
-/***/ 211:
+/***/ 158:
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
 	"../pages/liked/liked.module": [
-		697,
+		286,
 		3
 	],
 	"../pages/login/login.module": [
-		699,
+		285,
 		0
 	],
 	"../pages/mine/mine.module": [
-		698,
+		287,
 		2
 	],
 	"../pages/yomu/yomu.module": [
-		700,
+		288,
 		1
 	]
 };
@@ -345,19 +151,19 @@ function webpackAsyncContext(req) {
 webpackAsyncContext.keys = function webpackAsyncContextKeys() {
 	return Object.keys(map);
 };
-webpackAsyncContext.id = 211;
+webpackAsyncContext.id = 158;
 module.exports = webpackAsyncContext;
 
 /***/ }),
 
-/***/ 212:
+/***/ 159:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WordServiceProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -407,61 +213,15 @@ var WordServiceProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 32:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppSettings; });
-var AppSettings = /** @class */ (function () {
-    function AppSettings() {
-    }
-    AppSettings.getApiEndPoint = function () {
-        if (AppSettings.FLG_DEBUG) {
-            //ローカルでは認証通せないので、常に非ログイン時のURLを返す
-            return AppSettings.API_ENDPOINT_UNLOGINED;
-        }
-        if (AppSettings.flg_login) {
-            return AppSettings.API_ENDPOINT_LOGINED;
-        }
-        else {
-            return AppSettings.API_ENDPOINT_UNLOGINED;
-        }
-    };
-    AppSettings.isLogin = function () {
-        return AppSettings.flg_login;
-    };
-    AppSettings.setLogin = function (_flg_login) {
-        AppSettings.flg_login = _flg_login;
-    };
-    //DEBUG
-    AppSettings.FLG_DEBUG = true; //###
-    //URL
-    AppSettings.HOST = (AppSettings.FLG_DEBUG) ? "http://localhost:8100" : "http://newsenryu.spicy-space.xyz";
-    AppSettings.API_ENDPOINT_UNLOGINED = AppSettings.HOST + "/api/";
-    AppSettings.API_ENDPOINT_LOGINED = AppSettings.HOST + "/apis/";
-    AppSettings.AUTH_ENDPOINT_TWITTER = AppSettings.HOST + "/auth/twitter";
-    //LOGIN
-    AppSettings.flg_login = false;
-    //川柳取得モード
-    AppSettings.MODE_GET_SENRYU_NORMAL = 0;
-    AppSettings.MODE_GET_SENRYU_MINE = 1; //自分が投稿した川柳
-    AppSettings.MODE_GET_SENRYU_LIKED = 2; //自分がいいねした川柳
-    return AppSettings;
-}());
-
-//# sourceMappingURL=app.settings.js.map
-
-/***/ }),
-
-/***/ 356:
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_pages_service_pages_service__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_pages_service_pages_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(34);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -493,28 +253,30 @@ var ListPage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-list',template:/*ion-inline-start:"/Users/unod/workspace/repos/newsenryuapp/src/pages/list/list.html"*/'<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <ion-title>最新の川柳</ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content>\n  <senryu-list></senryu-list>\n</ion-content>\n\n<button right bottom ion-fab (click)="yomuTapped($event)" class="yomuBtn"><ion-icon name="brush"></ion-icon></button>'/*ion-inline-end:"/Users/unod/workspace/repos/newsenryuapp/src/pages/list/list.html"*/
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__providers_pages_service_pages_service__["a" /* PagesServiceProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_pages_service_pages_service__["a" /* PagesServiceProvider */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_pages_service_pages_service__["a" /* PagesServiceProvider */]])
     ], ListPage);
     return ListPage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=list.js.map
 
 /***/ }),
 
-/***/ 357:
+/***/ 204:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return YomuPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_word_service_word_service__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_senryu_service_senryu_service__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_settings__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_pages_service_pages_service__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_word_service_word_service__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_senryu_service_senryu_service__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_app_settings__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_pages_service_pages_service__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -550,7 +312,11 @@ var YomuPage = /** @class */ (function () {
     }
     YomuPage.prototype.ionViewCanEnter = function () {
         //ログインチェック
-        return this.pagesService.checkLoginAndUpdateMenu();
+        var promise = this.pagesService.checkLoginAndUpdateMenu();
+        if (!__WEBPACK_IMPORTED_MODULE_4__app_app_settings__["a" /* AppSettings */].isLogin()) {
+            location.href = __WEBPACK_IMPORTED_MODULE_4__app_app_settings__["a" /* AppSettings */].AUTH_ENDPOINT_TWITTER;
+        }
+        return promise;
     };
     YomuPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad YomuPage');
@@ -635,13 +401,13 @@ var YomuPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 359:
+/***/ 205:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(360);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(206);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(226);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -649,25 +415,25 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 364:
+/***/ 226:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(691);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_list_list__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_mine_mine__ = __webpack_require__(156);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_liked_liked__ = __webpack_require__(155);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(352);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_senryu_service_senryu_service__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_word_service_word_service__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_pages_service_pages_service__ = __webpack_require__(154);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_components_module__ = __webpack_require__(695);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_list_list__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_mine_mine__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_liked_liked__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_status_bar__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_splash_screen__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__providers_senryu_service_senryu_service__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__providers_word_service_word_service__ = __webpack_require__(159);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_pages_service_pages_service__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_components_module__ = __webpack_require__(283);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -705,9 +471,9 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
                 __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                     links: [
+                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'login', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/liked/liked.module#LikedPageModule', name: 'LikedPage', segment: 'liked', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/mine/mine.module#MinePageModule', name: 'mine', segment: 'mine', priority: 'low', defaultHistory: [] },
-                        { loadChildren: '../pages/login/login.module#LoginPageModule', name: 'login', segment: 'login', priority: 'low', defaultHistory: [] },
                         { loadChildren: '../pages/yomu/yomu.module#YomuPageModule', name: 'yomu', segment: 'yomu', priority: 'low', defaultHistory: [] }
                     ]
                 }),
@@ -741,17 +507,63 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 691:
+/***/ 26:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppSettings; });
+var AppSettings = /** @class */ (function () {
+    function AppSettings() {
+    }
+    AppSettings.getApiEndPoint = function () {
+        if (AppSettings.FLG_DEBUG) {
+            //ローカルでは認証通せないので、常に非ログイン時のURLを返す
+            return AppSettings.API_ENDPOINT_UNLOGINED;
+        }
+        if (AppSettings.flg_login) {
+            return AppSettings.API_ENDPOINT_LOGINED;
+        }
+        else {
+            return AppSettings.API_ENDPOINT_UNLOGINED;
+        }
+    };
+    AppSettings.isLogin = function () {
+        return AppSettings.flg_login;
+    };
+    AppSettings.setLogin = function (_flg_login) {
+        AppSettings.flg_login = _flg_login;
+    };
+    //DEBUG
+    AppSettings.FLG_DEBUG = false; //###
+    //URL
+    AppSettings.HOST = (AppSettings.FLG_DEBUG) ? "http://localhost:8100" : "http://newsenryu.spicy-space.xyz";
+    AppSettings.API_ENDPOINT_UNLOGINED = AppSettings.HOST + "/api/";
+    AppSettings.API_ENDPOINT_LOGINED = AppSettings.HOST + "/apis/";
+    AppSettings.AUTH_ENDPOINT_TWITTER = AppSettings.HOST + "/auth/twitter";
+    //LOGIN
+    AppSettings.flg_login = false;
+    //川柳取得モード
+    AppSettings.MODE_GET_SENRYU_NORMAL = 0;
+    AppSettings.MODE_GET_SENRYU_MINE = 1; //自分が投稿した川柳
+    AppSettings.MODE_GET_SENRYU_LIKED = 2; //自分がいいねした川柳
+    return AppSettings;
+}());
+
+//# sourceMappingURL=app.settings.js.map
+
+/***/ }),
+
+/***/ 274:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(352);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_list_list__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_pages_service_pages_service__ = __webpack_require__(154);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(202);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_list_list__ = __webpack_require__(203);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_pages_service_pages_service__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -816,14 +628,14 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 695:
+/***/ 283:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ComponentsModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__senryu_list_senryu_list__ = __webpack_require__(696);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__senryu_list_senryu_list__ = __webpack_require__(284);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -850,15 +662,15 @@ var ComponentsModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 696:
+/***/ 284:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SenryuListComponent; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_senryu_service_senryu_service__ = __webpack_require__(118);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__providers_senryu_service_senryu_service__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_settings__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(15);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -948,7 +760,200 @@ var SenryuListComponent = /** @class */ (function () {
 
 //# sourceMappingURL=senryu-list.js.map
 
+/***/ }),
+
+/***/ 48:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PagesServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_common_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_mine_mine__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_liked_liked__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__app_app_settings__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+// import { LoginPage } from '../../pages/login/login';
+
+var PagesServiceProvider = /** @class */ (function () {
+    function PagesServiceProvider(events, http) {
+        this.events = events;
+        this.http = http;
+        this.pages = [];
+        this.eanableDefaultMenu();
+    }
+    PagesServiceProvider.prototype.getPages = function () {
+        return this.pages;
+    };
+    PagesServiceProvider.prototype.eanableDefaultMenu = function () {
+        this.pages = [
+            { title: '最新の川柳', component: 'list', isSelected: true },
+            { title: ' 一句詠む', component: 'yomu', isSelected: false },
+            { title: 'ログイン', component: 'login', isSelected: false },
+        ];
+        this.events.publish('updateMenu', this.pages);
+    };
+    PagesServiceProvider.prototype.enableLoginedMenu = function () {
+        this.pages = [
+            { title: '最新の川柳', component: 'list', isSelected: true },
+            { title: ' 一句詠む', component: 'yomu', isSelected: false },
+            { title: '自分が詠んだ川柳', component: __WEBPACK_IMPORTED_MODULE_3__pages_mine_mine__["a" /* MinePage */], isSelected: false },
+            { title: 'イイネした川柳', component: __WEBPACK_IMPORTED_MODULE_4__pages_liked_liked__["a" /* LikedPage */], isSelected: false }
+        ];
+        this.events.publish('updateMenu', this.pages);
+    };
+    PagesServiceProvider.prototype.changePage = function (component) {
+        this.pages.map(function (p) {
+            p['isSelected'] = (component === p.component);
+        });
+    };
+    PagesServiceProvider.prototype.checkLoginAndUpdateMenu = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (__WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].isLogin())
+                resolve(true);
+            var _url = __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].API_ENDPOINT_LOGINED + 'check';
+            console.log("cehckLogin:" + _url);
+            _this.http.get(_url, { observe: 'response' }).subscribe(function (res) {
+                console.log("res.status:" + res.status);
+                if (res.status == 200) {
+                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(true);
+                    _this.enableLoginedMenu();
+                }
+                else {
+                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(false);
+                }
+                resolve(true);
+            }, function (err) {
+                console.log(err);
+                if (__WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].FLG_DEBUG) {
+                    //無理やりログイン状態で表示
+                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(true);
+                    _this.enableLoginedMenu();
+                }
+                else {
+                    __WEBPACK_IMPORTED_MODULE_5__app_app_settings__["a" /* AppSettings */].setLogin(false);
+                    _this.eanableDefaultMenu();
+                }
+                resolve(true);
+            }, function () { });
+        });
+    };
+    PagesServiceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* Events */], __WEBPACK_IMPORTED_MODULE_2__angular_common_http__["a" /* HttpClient */]])
+    ], PagesServiceProvider);
+    return PagesServiceProvider;
+}());
+
+//# sourceMappingURL=pages-service.js.map
+
+/***/ }),
+
+/***/ 81:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SenryuServiceProvider; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_app_settings__ = __webpack_require__(26);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+/*
+  Generated class for the SenryuServiceProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+var SenryuServiceProvider = /** @class */ (function () {
+    function SenryuServiceProvider(http) {
+        this.http = http;
+        console.log('Hello SenryuServiceProvider Provider');
+    }
+    SenryuServiceProvider.prototype.getSenryus = function (_mode, _url, _since_id) {
+        if (_mode === void 0) { _mode = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_NORMAL; }
+        if (_url === void 0) { _url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'senryu'; }
+        if (_since_id === void 0) { _since_id = null; }
+        switch (_mode) {
+            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_MINE:
+                _url = this.addParam2URL(_url, 'mode', 'mine');
+                break;
+            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_LIKED:
+                _url = this.addParam2URL(_url, 'mode', 'liked');
+                break;
+            case __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].MODE_GET_SENRYU_NORMAL:
+                break;
+            default:
+                break;
+        }
+        if (_since_id != null) {
+            _url = this.addParam2URL(_url, 'since_id', _since_id);
+        }
+        console.log("getSenryu:" + _url);
+        return this.http.get(_url);
+    };
+    SenryuServiceProvider.prototype.postSenryu = function (_senryu) {
+        var url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'senryu';
+        var senddata = {
+            word_kami_id: _senryu.kami_id,
+            word_naka_id: _senryu.naka_id,
+            word_simo_id: _senryu.simo_id,
+        };
+        return this.http.post(url, senddata);
+    };
+    SenryuServiceProvider.prototype.likeSenryu = function (_senryu, _flg_delete) {
+        if (_flg_delete === void 0) { _flg_delete = false; }
+        var url = __WEBPACK_IMPORTED_MODULE_3__app_app_settings__["a" /* AppSettings */].getApiEndPoint() + 'like';
+        var senddata = {
+            senryu_id: _senryu.id,
+            flg_delete: _flg_delete
+        };
+        return this.http.post(url, senddata);
+    };
+    SenryuServiceProvider.prototype.addParam2URL = function (_url, _key, _value) {
+        var resurl = _url;
+        resurl += (resurl.indexOf('?') == -1) ? '?' : '&';
+        resurl += _key + '=' + String(_value);
+        return resurl;
+    };
+    SenryuServiceProvider = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+    ], SenryuServiceProvider);
+    return SenryuServiceProvider;
+}());
+
+//# sourceMappingURL=senryu-service.js.map
+
 /***/ })
 
-},[359]);
+},[205]);
 //# sourceMappingURL=main.js.map
