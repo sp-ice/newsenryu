@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        // \App\Http\Middleware\ApiAuthCheck::class,
     ];
 
     /**
@@ -37,6 +38,16 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
+            'throttle:60,1',
+            'bindings',
+        ],
+
+        'stateful_api' => [
+            \App\Http\Middleware\EncryptCookies::class,
+            \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+            \Illuminate\Session\Middleware\StartSession::class,
+            \App\Http\Middleware\ApiAuthCheck::class,
+            \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             'throttle:60,1',
             'bindings',
         ],

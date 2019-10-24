@@ -33,7 +33,7 @@ class Senryu extends Model
      */
     public function kami_ku()
     {
-        return $this->hasOne(Word::class, 'word_kami_id');
+        return $this->belongsTo(Word::class, 'word_kami_id');
     }
     
     /**
@@ -41,7 +41,7 @@ class Senryu extends Model
      */
     public function naka_ku()
     {
-        return $this->hasOne(Word::class, 'word_naka_id');
+        return $this->belongsTo(Word::class, 'word_naka_id');
     }
     
     /**
@@ -49,6 +49,6 @@ class Senryu extends Model
      */
     public function simo_ku()
     {
-        return $this->hasOne(Word::class, 'word_simo_id');
+        return $this->belongsTo(Word::class, 'word_simo_id');
     }
 }

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Stateful;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Like;
 use DB;
 
-class LikeController extends Controller
+class LikeController extends \App\Http\Controllers\Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -17,8 +18,7 @@ class LikeController extends Controller
     public function store(Request $request)
     {
         $like = new Like();
-        // todo: ログインユーザのidが入るようにする
-        $like->user_id = \App\User::query()->first()->id;
+        $like->user_id = $request->user()->id;
         $like->senryu_id = $request->input('senryu_id');
         if($request->input('flg_delete')){
             $like->delete();

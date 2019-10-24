@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Stateful;
 
 use App\Word;
 use Illuminate\Http\Request;
+use Auth;
 
-class WordController extends Controller
-{
+class WordController extends \App\Http\Controllers\Controller
+{   
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +15,6 @@ class WordController extends Controller
      */
     public function index(Request $request)
     {
-	//return response(Word::find(9426));
     	$words = Word::select(
             'words.id',
             'news.id AS news_id',
@@ -28,6 +28,10 @@ class WordController extends Controller
         ->join('news','news.id','=','words.news_id')
         ->where('words.len', '=', $request->input('len', 5))
         ->orderby('words.created_at', 'desc');
+
+        if( $request->input('since_id') ){
+            $words = $words->where('words.id', '<=', $request->input('since_id'));
+        }
         
         return response($words->paginate(50));
     }

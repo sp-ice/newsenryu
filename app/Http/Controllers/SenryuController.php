@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\Senryu;
+use App\Like;
 use Illuminate\Http\Request;
+use Auth;
 
 class SenryuController extends Controller
 {
@@ -14,7 +16,14 @@ class SenryuController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {        
+        // if( $request->user() ){
+        //     print_r($request->user()->id);
+        // } else {
+        //     print_r("!!!2");
+        // }
+        // exit;
+
         //いいねカウント
         $likes_sql = DB::raw(
             '(SELECT senryu_id, COUNT(*) AS like_count'.
@@ -24,12 +33,14 @@ class SenryuController extends Controller
         );
 
         //ログインユーザーいいね済み川柳
-        $is_liked_sql = DB::raw(
-            '(SELECT senryu_id, 1 as is_liked'.
-            ' FROM likes'.
-            ' WHERE user_id='.\App\User::query()->first()->id.//todo
-            ') as liked'
-        );
+        if( $request->user() ){
+            $is_liked_sql = DB::raw(
+                '(SELECT senryu_id, 1 as is_liked'.
+                ' FROM likes'.
+                ' WHERE user_id='.$request->user()->id.
+                ') as liked'
+            );
+        }
 
         $senryus = Senryu::select(
                 'senryu.id',
@@ -47,8 +58,7 @@ class SenryuController extends Controller
                 'news_kami.url as kami_url',
                 'news_naka.url as naka_url',
                 'news_simo.url as simo_url',
-                'good.like_count',
-                'liked.is_liked'
+                'good.like_count'
             )
             ->join('users','users.id','=','senryu.user_id')
             ->join('words as words_kami','words_kami.id','=','senryu.word_kami_id')
@@ -58,16 +68,19 @@ class SenryuController extends Controller
             ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
             ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
             ->leftJoin($likes_sql,'good.senryu_id','=','senryu.id')
-            ->leftJoin($is_liked_sql,'liked.senryu_id','=','senryu.id')
             ->orderby('senryu.created_at', 'desc');
+
+        if( $request->user() ){
+            $senryus = $senryus->addSelect('liked.is_liked');
+            $senryus = $senryus->leftJoin($is_liked_sql,'liked.senryu_id','=','senryu.id');
+        }
 
         if( $request->input('since_id') ){
             $senryus = $senryus->where('senryu.id', '<=', $request->input('since_id'));
         }
         switch( $request->input('mode') ){
             case 'mine':
-                // todo: ログインユーザのidが入るようにする
-                $senryus = $senryus->where('users.id', '=', \App\User::query()->first()->id);
+                $senryus = $senryus->where('users.id', '=', $request->user()->id);
                 break;
             case 'liked':
                 $senryus = $senryus->where('liked.is_liked', '=', 1);
@@ -94,25 +107,7 @@ class SenryuController extends Controller
      */
     public function store(Request $request)
     {
-//id           | bigint                         | not null default nextval('senryu_id_seq'::regclass)
-// user_id      | integer                        | not null
-// word_kami_id | integer                        | not null
-// word_naka_id | integer                        | not null
-// word_simo_id | integer                        | not null
-// good         | integer                        | not null
-// view         | integer                        | not null
- //created_at   | timestamp(0) without time zone | 
- //updated_at   | timestamp(0) without time zone |		
-        $senryu = new Senryu();
-        // todo: ログインユーザのidが入るようにする
-        $senryu->user_id = \App\User::query()->first()->id;
-        $senryu->word_kami_id = $request->input('word_kami_id');
-        $senryu->word_naka_id = $request->input('word_naka_id');
-        $senryu->word_simo_id = $request->input('word_simo_id');
-        $senryu->good = 0;
-        $senryu->view = 0;
-        $senryu->save();
-        return response($senryu, 201);
+        //no use
     }
 
     /**
@@ -123,6 +118,35 @@ class SenryuController extends Controller
      */
     public function show(Senryu $senryu)
     {
+        $user = $senryu->user()->first();
+        $kami_ku = $senryu->kami_ku()->first();
+        $naka_ku = $senryu->naka_ku()->first();
+        $simo_ku = $senryu->simo_ku()->first();
+        $kami_news = $kami_ku->news()->first();
+        $naka_news = $naka_ku->news()->first();
+        $simo_news = $simo_ku->news()->first();
+        $like_count = Like::where('senryu_id','=',$senryu->id)
+                            ->count();
+        // $is_liked = Like::where('senryu_id','=',$senryu->id)
+        // ->where('user_id','=', $request->user()->id)
+        // ->count();        
+        
+        $senryu->user_id = $user->id;
+        $senryu->user_name = $user->name;
+        $senryu->kami_ku = $kami_ku->word;
+        $senryu->naka_ku = $naka_ku->word;
+        $senryu->simo_ku = $simo_ku->word;
+        $senryu->kami_id = $kami_ku->id;
+        $senryu->naka_id = $naka_ku->id;
+        $senryu->simo_id = $simo_ku->id;
+        $senryu->kami_url = $kami_news->url;
+        $senryu->naka_url = $naka_news->url;
+        $senryu->simo_url = $simo_news->url;
+        $senryu->kami_title = $kami_news->title;
+        $senryu->naka_title = $naka_news->title;
+        $senryu->simo_title = $simo_news->title;
+        $senryu->like_count = $like_count;
+
         return response($senryu);
     }
 
@@ -146,24 +170,7 @@ class SenryuController extends Controller
      */
     public function update(Request $request, Senryu $senryu)
     {
-    	if($request->input('word_kami_id')){
-    		$senryu->word_kami_id = $request->input('word_kami_id');
-    	}
-    	if($request->input('word_naka_id')){
-            	$senryu->word_naka_id = $request->input('word_naka_id');
-    	}
-    	if($request->input('word_simo_id')){
-           		$senryu->word_simo_id = $request->input('word_simo_id');
-    	}
-    	if($request->input('good')){
-            	$senryu->good = $request->input('good');
-    	}
-    	if($request->input('view')){
-            	$senryu->view = $request->input('view');
-    	}
-        $senryu->save();
-        return response($senryu);
- 
+        //no use
     }
 
     /**
@@ -174,7 +181,6 @@ class SenryuController extends Controller
      */
     public function destroy(Senryu $senryu)
     {
-    	$senryu->delete();
-	return response('{}');
+    	//no use
     }
 }

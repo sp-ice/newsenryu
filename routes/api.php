@@ -17,7 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('/word', 'WordController', ['except' => ['create', 'edit', 'store', 'update', 'destroy']]);
 Route::resource('/senryu', 'SenryuController', ['except' => ['create', 'edit']]);
-Route::resource('/like', 'LikeController', ['except' => ['create', 'destroy']]);
+
+//###
+Route::resource('/senryu', 'Stateful\StatefulSenryuController', ['except' => ['create', 'edit', 'show']]);
+Route::resource('/word', 'Stateful\WordController', ['except' => ['create', 'edit', 'store', 'update', 'destroy']]);
+Route::resource('/like', 'Stateful\LikeController', ['except' => ['create', 'destroy']]);
 
