@@ -55,18 +55,18 @@ class SenryuController extends Controller
                 'words_kami.id as kami_id',
                 'words_naka.id as naka_id',
                 'words_simo.id as simo_id',
-                'news_kami.url as kami_url',
-                'news_naka.url as naka_url',
-                'news_simo.url as simo_url',
+                // 'news_kami.url as kami_url',
+                // 'news_naka.url as naka_url',
+                // 'news_simo.url as simo_url',
                 'good.like_count'
             )
             ->join('users','users.id','=','senryu.user_id')
             ->join('words as words_kami','words_kami.id','=','senryu.word_kami_id')
             ->join('words as words_naka','words_naka.id','=','senryu.word_naka_id')
             ->join('words as words_simo','words_simo.id','=','senryu.word_simo_id')
-            ->join('news as news_kami','news_kami.id','=','words_kami.news_id')
-            ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
-            ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
+            // ->join('news as news_kami','news_kami.id','=','words_kami.news_id')
+            // ->join('news as news_naka','news_naka.id','=','words_naka.news_id')
+            // ->join('news as news_simo','news_simo.id','=','words_simo.news_id')
             ->leftJoin($likes_sql,'good.senryu_id','=','senryu.id')
             ->orderby('senryu.created_at', 'desc');
 
@@ -86,6 +86,8 @@ class SenryuController extends Controller
                 $senryus = $senryus->where('liked.is_liked', '=', 1);
                 break;
         }
+        // print_r($senryus->toSql());
+        // exit;
         return response($senryus->paginate());
     }
 
